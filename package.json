@@ -12,10 +12,12 @@
     "build": "tsc",
     "test": "vitest run",
     "test:dev": "vitest",
-    "ci": "pnpm run build && pnpm format:check && pnpm check-exports && pn test",
+    "ci": "pnpm build && pnpm format:check && pnpm check-exports && pn test",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
+    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "local-release": "changeset version && changeset publish",
+    "prepublishOnly": "pnpm ci"
   },
   "repository": {
     "type": "git",
@@ -37,6 +39,7 @@
   "homepage": "https://github.com/detkendesign/ionicons#readme",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
+    "@changesets/cli": "^2.27.9",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4"
   }

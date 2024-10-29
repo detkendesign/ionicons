@@ -10,8 +10,9 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "vitest",
-    "ci": "pnpm run build && pnpm format:check && pnpm check-exports",
+    "test": "vitest run",
+    "test:dev": "vitest",
+    "ci": "pnpm run build && pnpm format:check && pnpm check-exports && pn test",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
@@ -36,6 +37,7 @@
   "homepage": "https://github.com/detkendesign/ionicons#readme",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
   }
 }

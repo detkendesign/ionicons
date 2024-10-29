@@ -1,6 +1,6 @@
 {
   "name": "@dtkn/ionicons",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An icon component for ionicons",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

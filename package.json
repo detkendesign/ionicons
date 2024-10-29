@@ -11,7 +11,9 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest",
-    "ci": "pnpm run build"
+    "ci": "pnpm run build && pnpm format:check",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
   },
   "repository": {
     "type": "git",

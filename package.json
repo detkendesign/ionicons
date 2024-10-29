@@ -1,0 +1,36 @@
+{
+  "name": "@dtkn/ionicons",
+  "version": "0.0.1",
+  "description": "An icon component for ionicons",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/detkendesign/ionicons.git"
+  },
+  "keywords": [
+    "icons",
+    "ionicons",
+    "ionicons-react",
+    "react-ionicons",
+    "react"
+  ],
+  "author": "Anton Detken <anton@detken.dev> (https://detkendevelopment.com)",
+  "license": "MIT",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/detkendesign/ionicons/issues"
+  },
+  "homepage": "https://github.com/detkendesign/ionicons#readme",
+  "devDependencies": {
+    "ts-node": "^10.x",
+    "typescript": "^4.x",
+    "vitest": "^1.6.0"
+  }
+}

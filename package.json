@@ -12,7 +12,8 @@
     "build": "tsc",
     "test": "vitest run",
     "test:dev": "vitest",
-    "ci": "pnpm run build && pnpm run format:check && pnpm run check-exports && pnpm run test",
+    "ci": "pnpm run build && pnpm run lint && pnpm run format:check && pnpm run check-exports && pnpm run test",
+    "lint": "eslint .",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
@@ -40,7 +41,12 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
     "@changesets/cli": "^2.27.9",
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.11.0",
     "typescript": "^5.6.3",
+    "typescript-eslint": "^8.12.2",
     "vitest": "^2.1.4"
   }
 }

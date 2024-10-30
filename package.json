@@ -13,12 +13,15 @@
     "build": "tsc",
     "test": "vitest run",
     "test:dev": "vitest",
-    "ci": "pnpm run build && pnpm run format:check && pnpm run check-exports && pnpm run test",
+    "ci": "pnpm run build && pnpm run lint && pnpm run format:check && pnpm run check-exports && pnpm run test",
+    "lint": "eslint .",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "local-release": "changeset version && changeset publish",
-    "prepublishOnly": "pnpm run ci"
+    "prepublishOnly": "pnpm run ci",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "repository": {
     "type": "git",
@@ -41,6 +44,20 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
     "@changesets/cli": "^2.27.9",
+    "@eslint/js": "^9.13.0",
+    "@storybook/addon-essentials": "^8.3.6",
+    "@storybook/builder-vite": "^8.3.6",
+    "@storybook/cli": "^8.3.6",
+    "@storybook/react": "^8.3.6",
+    "@storybook/react-vite": "^8.3.6",
+    "@testing-library/jest-dom": "^6.6.2",
+    "@testing-library/react": "^16.0.1",
+    "@types/react-dom": "^18.3.1",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.11.0",
+    "jsdom": "^25.0.1",
+    "storybook": "^8.3.6",
     "@types/node": "^22.8.4",
     "@types/react": "^18.3.12",
     "ionicons": "^7.4.0",
@@ -49,9 +66,7 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
+    "typescript-eslint": "^8.12.2",
     "vitest": "^2.1.4"
-  },
-  "dependencies": {
-    "react": "^18.3.1"
   }
 }

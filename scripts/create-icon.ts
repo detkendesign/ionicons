@@ -100,13 +100,13 @@ const processIcons = async () => {
   const resolverText = `
   ${iconImports.join("\n")}
 
-  const Icons = {${allIcons}}
+  export const Icons = {${allIcons}}
 
   export type IconKeys = keyof typeof Icons
   `;
 
   const formattedResolver = await prettier.format(resolverText, prettierConfig);
-  fs.appendFileSync(resolverPath, formattedResolver, "utf-8");
+  fs.writeFileSync(resolverPath, formattedResolver, "utf-8");
 
   console.log(formattedResolver);
 };

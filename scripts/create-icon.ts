@@ -8,19 +8,14 @@ import prettier from "prettier";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const iconList = ionicons.contributions.html.ionicons;
+const iconList = ionicons.contributions.html.ionicons.slice(0, 3);
 
 const rootDir = path.join(__dirname, "..");
-
-const __directory = "src/components/icons/svg";
-
+const __directory = "src/components/icon/svg";
 const dir = path.join(rootDir, __directory);
-
 const resolverPath = path.join(rootDir, "src/components/icon/resolver.ts");
 
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir);
-}
+fs.mkdirSync(dir, { recursive: true });
 
 const upperCamelCase = (...args: string[]) => {
   return args
@@ -68,34 +63,52 @@ ${componentName}.displayName = "${componentName}";
   return formattedElement;
 };
 
-const allIcons = iconList
-  .slice(0, 3)
-  .map((icon) => upperCamelCase(icon.name))
-  .join(", ");
+const allIcons = iconList.map((icon) => upperCamelCase(icon.name)).join(", ");
 
 const createImportStatement = (name: string) => {
   return `import { ${upperCamelCase(name)} } from "./svg/${name}.js";`;
 };
 
-iconList.slice(0, 3).forEach(async (icon) => {
-  const iconLocation = path.join(rootDir, __directory, `${icon.name}.tsx`);
+const generateIcon = async () => {
+  const iconImports: string[] = [];
 
-  const node = fs.readFileSync(`${rootDir}/node_modules/ionicons/${icon.icon}`);
+  for (const icon of iconList) {
+    const iconLocation = path.join(rootDir, __directory, `${icon.name}.tsx`);
 
-  const element = await createElement(icon.name, node);
+    try {
+      const node = fs.readFileSync(
+        `${rootDir}/node_modules/ionicons/${icon.icon}`,
+      );
+      const element = await createElement(icon.name, node);
 
-  fs.writeFileSync(iconLocation, element, "utf-8");
+      fs.writeFileSync(iconLocation, element, "utf-8");
 
-  const importStatement = createImportStatement(icon.name);
-  fs.appendFileSync(resolverPath, importStatement, "utf-8");
-});
+      // Append import to resolver
+      const importStatement = createImportStatement(icon.name);
+      iconImports.push(importStatement);
+    } catch (error) {
+      console.error(`Error processing icon ${icon.name}:`, error);
+    }
+  }
 
-const iconObject = `
-const Icons = {${allIcons}}
+  return iconImports;
+};
 
-export type IconKeys = keyof typeof Icons
-`;
+const processIcons = async () => {
+  const iconImports = await generateIcon();
 
-prettier.format(iconObject, prettierConfig).then((file) => {
-  fs.appendFileSync(resolverPath, file, "utf-8");
-});
+  const resolverText = `
+  ${iconImports.join("\n")}
+
+  const Icons = {${allIcons}}
+
+  export type IconKeys = keyof typeof Icons
+  `;
+
+  const formattedResolver = await prettier.format(resolverText, prettierConfig);
+  fs.appendFileSync(resolverPath, formattedResolver, "utf-8");
+
+  console.log(formattedResolver);
+};
+
+processIcons();

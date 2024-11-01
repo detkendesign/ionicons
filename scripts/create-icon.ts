@@ -63,7 +63,9 @@ ${componentName}.displayName = "${componentName}";
   return formattedElement;
 };
 
-const allIcons = iconList.map((icon) => upperCamelCase(icon.name)).join(", ");
+const allIcons = iconList
+  .map((icon) => `['${icon.name}']: ${upperCamelCase(icon.name)}`)
+  .join(", ");
 
 const createImportStatement = (name: string) => {
   return `import { ${upperCamelCase(name)} } from "./svg/${name}.js";`;

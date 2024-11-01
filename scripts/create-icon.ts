@@ -40,22 +40,29 @@ const createElement = async (name: string, node: unknown) => {
 
   const jsxString = await svgToJsx(node as string);
 
+  const size = (key: string) => `${key} ?? size`;
+
   const updatedJsxString = jsxString.replace(
     /<svg([^>]*)>/,
-    `<svg$1 {...props} ref={ref}>`,
+    `<svg$1 width={${size("width")}} height={${size("height")}} ref={ref} {...rest}>`,
   );
 
-  const element = `import { forwardRef, type SVGAttributes } from "react";
+  const element = `
+    import { forwardRef } from "react";
+    import { type DefaultIconProps } from "../types.js";
 
-export const ${componentName} = forwardRef<SVGSVGElement, SVGAttributes<SVGElement>>(
-  (props, ref) => {
-    return (
-      ${updatedJsxString}
+    export const ${componentName} = forwardRef<SVGSVGElement, DefaultIconProps>(
+      (props, ref) => {
+
+        const { width, size, height, ...rest } = props 
+
+        return (
+          ${updatedJsxString}
+        );
+      }
     );
-  }
-);
 
-${componentName}.displayName = "${componentName}";
+    ${componentName}.displayName = "${componentName}";
 `;
 
   const formattedElement = await prettier.format(element, prettierConfig);

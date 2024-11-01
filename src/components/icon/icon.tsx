@@ -1,13 +1,27 @@
-import { forwardRef, type SVGAttributes } from "react";
+import { forwardRef } from "react";
 import { type IconKeys, Icons } from "./resolver.js";
+import type { DefaultIconProps, IconSize } from "./types.js";
 
-export interface IconProps extends Omit<SVGAttributes<SVGElement>, "name"> {
+export interface IconProps extends Omit<DefaultIconProps, "name" | "size"> {
   name: IconKeys;
   svgName?: string;
+  size?: IconSize | number;
 }
 
+const ICON_SIZE: Record<IconSize, number> = {
+  small: 16,
+  medium: 24,
+  large: 32,
+};
+
+const assertSize = (size: IconSize | number): number => {
+  if (typeof size === "number") return size;
+
+  return ICON_SIZE[size];
+};
+
 export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
-  const { name: iconName, svgName: name, ...rest } = props;
+  const { name: iconName, svgName: name, size = "medium", ...rest } = props;
   const Component = Icons[iconName];
 
   if (!Component) {
@@ -15,7 +29,15 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
     throw new Error(`Invalid Icon name provided for Icon`);
   }
 
-  return <Component ref={ref} name={name} {...rest} />;
+  return (
+    <Component
+      ref={ref}
+      name={name}
+      size={assertSize(size)}
+      color="red"
+      {...rest}
+    />
+  );
 });
 
 Icon.displayName = "Icon";

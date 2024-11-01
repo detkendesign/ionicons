@@ -12,7 +12,11 @@ const iconList = ionicons.contributions.html.ionicons;
 
 const rootDir = path.join(__dirname, "..");
 
-const dir = path.join(rootDir, "src/icons");
+const __directory = "src/components/icons/svg";
+
+const dir = path.join(rootDir, __directory);
+
+const resolverPath = path.join(rootDir, "src/components/icon/resolver.ts");
 
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
@@ -27,8 +31,17 @@ const upperCamelCase = (...args: string[]) => {
     .join("");
 };
 
+const prettierConfig = {
+  parser: "typescript",
+  semi: true,
+  singleQuote: false,
+  tabWidth: 2,
+  printWidth: 80,
+  trailingComma: "all",
+} as const;
+
 const createElement = async (name: string, node: unknown) => {
-  const ComponentName = upperCamelCase(name);
+  const componentName = upperCamelCase(name);
 
   const jsxString = await svgToJsx(node as string);
 
@@ -37,9 +50,9 @@ const createElement = async (name: string, node: unknown) => {
     `<svg$1 {...props} ref={ref}>`,
   );
 
-  const element = `import React, { forwardRef, type SVGAttributes } from "react";
+  const element = `import { forwardRef, type SVGAttributes } from "react";
 
-const ${ComponentName} = forwardRef<SVGSVGElement, SVGAttributes<SVGElement>>(
+export const ${componentName} = forwardRef<SVGSVGElement, SVGAttributes<SVGElement>>(
   (props, ref) => {
     return (
       ${updatedJsxString}
@@ -47,28 +60,42 @@ const ${ComponentName} = forwardRef<SVGSVGElement, SVGAttributes<SVGElement>>(
   }
 );
 
-${ComponentName}.displayName = "${ComponentName}";
+${componentName}.displayName = "${componentName}";
+`;
 
-export default ${ComponentName};`;
-
-  const formattedElement = await prettier.format(element, {
-    parser: "typescript",
-    semi: true,
-    singleQuote: false,
-    tabWidth: 2,
-    printWidth: 80,
-    trailingComma: "all",
-  });
+  const formattedElement = await prettier.format(element, prettierConfig);
 
   return formattedElement;
 };
 
+const allIcons = iconList
+  .slice(0, 3)
+  .map((icon) => upperCamelCase(icon.name))
+  .join(", ");
+
+const createImportStatement = (name: string) => {
+  return `import { ${upperCamelCase(name)} } from "./svg/${name}.js";`;
+};
+
 iconList.slice(0, 3).forEach(async (icon) => {
-  const location = path.join(rootDir, "src/icons", `${icon.name}.tsx`);
+  const iconLocation = path.join(rootDir, __directory, `${icon.name}.tsx`);
 
   const node = fs.readFileSync(`${rootDir}/node_modules/ionicons/${icon.icon}`);
 
   const element = await createElement(icon.name, node);
 
-  fs.writeFileSync(location, element, "utf-8");
+  fs.writeFileSync(iconLocation, element, "utf-8");
+
+  const importStatement = createImportStatement(icon.name);
+  fs.appendFileSync(resolverPath, importStatement, "utf-8");
+});
+
+const iconObject = `
+const Icons = {${allIcons}}
+
+export type IconKeys = keyof typeof Icons
+`;
+
+prettier.format(iconObject, prettierConfig).then((file) => {
+  fs.appendFileSync(resolverPath, file, "utf-8");
 });

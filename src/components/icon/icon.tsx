@@ -11,7 +11,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
   const Component = Icons[iconName];
 
   if (!Component) {
-    // TODO: Provide better error message
+    // TODO: Provide a better error message.
     throw new Error(`Invalid Icon name provided for Icon`);
   }
 

@@ -40,12 +40,8 @@ const createElement = async (name: string, node: unknown) => {
 
   const jsxString = await svgToJsx(node as string);
 
+  /** Gets the key property, if its available use it or defaults to size. */
   const size = (key: string) => `${key} ?? size`;
-
-  const updatedJsxString = jsxString.replace(
-    /<svg([^>]*)>/,
-    `<svg$1 width={${size("width")}} height={${size("height")}} ref={ref} {...rest}>`,
-  );
 
   const element = `
     import { forwardRef } from "react";
@@ -57,7 +53,10 @@ const createElement = async (name: string, node: unknown) => {
         const { width, size, height, ...rest } = props 
 
         return (
-          ${updatedJsxString}
+          ${jsxString.replace(
+            /<svg([^>]*)>/,
+            `<svg$1 width={${size("width")}} height={${size("height")}} ref={ref} {...rest}>`,
+          )}
         );
       }
     );

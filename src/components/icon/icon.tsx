@@ -9,7 +9,7 @@ export interface IconProps extends Omit<DefaultIconProps, "name" | "size"> {
   size?: IconSize | number;
 }
 
-const assertSize = (size: IconSize | number): number => {
+const getIconSize = (size: IconSize | number): number => {
   if (typeof size === "number") return size;
 
   return ICON_SIZE[size];
@@ -28,7 +28,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
     <Component
       ref={ref}
       name={name}
-      size={assertSize(size)}
+      size={getIconSize(size)}
       color="red"
       {...rest}
     />

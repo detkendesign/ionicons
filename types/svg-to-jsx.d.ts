@@ -1,3 +1,5 @@
+/** Provides type for svg-to-jsx package. */
+
 declare module "svg-to-jsx" {
   /**
    * Converts an SVG string to a JSX-compatible string.

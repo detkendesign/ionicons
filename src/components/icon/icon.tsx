@@ -1,18 +1,13 @@
 import { forwardRef } from "react";
 import { type IconKeys, Icons } from "./resolver.js";
 import type { DefaultIconProps, IconSize } from "./types.js";
+import { ICON_SIZE } from "./constants.js";
 
 export interface IconProps extends Omit<DefaultIconProps, "name" | "size"> {
   name: IconKeys;
   svgName?: string;
   size?: IconSize | number;
 }
-
-const ICON_SIZE: Record<IconSize, number> = {
-  small: 16,
-  medium: 24,
-  large: 32,
-};
 
 const assertSize = (size: IconSize | number): number => {
   if (typeof size === "number") return size;

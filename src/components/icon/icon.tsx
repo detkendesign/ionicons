@@ -15,24 +15,25 @@ const getIconSize = (size: IconSize | number): number => {
   return ICON_SIZE[size];
 };
 
-export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
-  const { name: iconName, svgName: name, size = "medium", ...rest } = props;
-  const Component = Icons[iconName];
+export const Icon = forwardRef<SVGSVGElement, IconProps>(
+  ({ name, svgName, size = "medium", ...props }, ref) => {
+    const Component = Icons[name];
 
-  if (!Component) {
-    // TODO: Provide a better error message.
-    throw new Error(`Invalid Icon name provided for Icon`);
-  }
+    if (!Component) {
+      // TODO: Provide a better error message.
+      throw new Error(`Invalid Icon name provided for Icon`);
+    }
 
-  return (
-    <Component
-      ref={ref}
-      name={name}
-      size={getIconSize(size)}
-      color="red"
-      {...rest}
-    />
-  );
-});
+    return (
+      <Component
+        ref={ref}
+        name={svgName}
+        size={getIconSize(size)}
+        color="red"
+        {...props}
+      />
+    );
+  },
+);
 
 Icon.displayName = "Icon";

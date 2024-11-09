@@ -2,9 +2,7 @@ import { forwardRef } from "react";
 import { type DefaultIconProps } from "../types.js";
 
 export const AccessibilityOutline = forwardRef<SVGSVGElement, DefaultIconProps>(
-  (props, ref) => {
-    const { width, size, height, ...rest } = props;
-
+  ({ width, size, height, ...props }, ref) => {
     return (
       <svg
         viewBox="0 0 512 512"
@@ -12,7 +10,7 @@ export const AccessibilityOutline = forwardRef<SVGSVGElement, DefaultIconProps>(
         width={width ?? size}
         height={height ?? size}
         ref={ref}
-        {...rest}
+        {...props}
       >
         <circle
           cx="256"

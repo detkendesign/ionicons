@@ -1,0 +1,128 @@
+import { forwardRef } from "react";
+import { type DefaultIconProps } from "../types.js";
+
+export const AppsOutline = forwardRef<SVGSVGElement, DefaultIconProps>(
+  ({ width, size, height, ...props }, ref) => {
+    return (
+      <svg
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
+        width={width ?? size}
+        height={height ?? size}
+        ref={ref}
+        {...props}
+      >
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="64"
+          y="64"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="216"
+          y="64"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="368"
+          y="64"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="64"
+          y="216"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="216"
+          y="216"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="368"
+          y="216"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="64"
+          y="368"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="216"
+          y="368"
+        />
+        <rect
+          height="80"
+          width="80"
+          fill="none"
+          rx="40"
+          ry="40"
+          stroke="currentColor"
+          strokeMiterlimit="10"
+          strokeWidth="32"
+          x="368"
+          y="368"
+        />
+      </svg>
+    );
+  },
+);
+
+AppsOutline.displayName = "AppsOutline";

@@ -8,7 +8,7 @@ import prettier from "prettier";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const iconList = ionicons.contributions.html.ionicons.slice(0, 3);
+const iconList = ionicons.contributions.html.ionicons;
 
 const rootDir = path.join(__dirname, "..");
 const __directory = "src/components/icon/svg";
@@ -48,14 +48,12 @@ const createElement = async (name: string, node: unknown) => {
     import { type DefaultIconProps } from "../types.js";
 
     export const ${componentName} = forwardRef<SVGSVGElement, DefaultIconProps>(
-      (props, ref) => {
-
-        const { width, size, height, ...rest } = props 
+      ({ width, size, height, ...props }, ref) => {
 
         return (
           ${jsxString.replace(
             /<svg([^>]*)>/,
-            `<svg$1 width={${size("width")}} height={${size("height")}} ref={ref} {...rest}>`,
+            `<svg$1 width={${size("width")}} height={${size("height")}} ref={ref} {...props}>`,
           )}
         );
       }

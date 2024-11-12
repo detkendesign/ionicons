@@ -1,1 +1,1 @@
-export { add } from "./utils.js";
+export { Icon, type IconProps } from "./components/icon/index.js";

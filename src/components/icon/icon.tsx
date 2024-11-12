@@ -25,13 +25,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
     }
 
     return (
-      <Component
-        ref={ref}
-        name={svgName}
-        size={getIconSize(size)}
-        color="red"
-        {...props}
-      />
+      <Component ref={ref} name={svgName} size={getIconSize(size)} {...props} />
     );
   },
 );
